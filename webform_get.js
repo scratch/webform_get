@@ -5,18 +5,22 @@
 var request = require('request')
 
 function getWebformSubmission()  {
-    var purl = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/user/login?_format=json'
+    var purl = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/user/login?'
+    var webfrm_url = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/webform_rest/swl_create_service/submissions/1_format=json?'
+
     var user = new Object()
     user.name = 'admin'
     user.pass = 'swladmin'
 
+    auth = 'Basic' + JSON.stringify (user)
+
     var json_user = JSON.stringify (user)
 
     var options = {
+        jar: true,
         url: purl,
-        json: true,
-        data: {
-            json_user
+        headers: {
+            Authorization: auth
         }
     }
 
@@ -25,11 +29,22 @@ function getWebformSubmission()  {
             console.error ("Error authenticating", err);
         } else {
             console.log ("Response: ", resp)
-            console.log ("body: ", body)
+            console.log ("Body: ", body)
         }
     }
 
-    request.post(options, req_callback)
+
+    function req_callback_webform (err, resp, body) {
+        if (err)  {
+            console.error ("Error authenticating", err);
+        } else {
+            console.log ("Response: ", resp)
+        }
+    }
+
+
+    request.get(options, req_callback)
+    request.get(webfrm_url, req_callback_webform)
 }
 
 getWebformSubmission();
