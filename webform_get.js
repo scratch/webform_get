@@ -12,7 +12,7 @@ function getWebformSubmission()  {
     user.name = 'admin'
     user.pass = 'swladmin'
 
-    auth = 'Basic' + JSON.stringify (user)
+    auth = 'Basic' + new Buffer("admin:swladmin").toString('base64');
 
     var json_user = JSON.stringify (user)
 
@@ -20,7 +20,7 @@ function getWebformSubmission()  {
         jar: true,
         url: purl,
         headers: {
-            Authorization: auth
+            "Authorization": auth
         }
     }
 
@@ -28,8 +28,8 @@ function getWebformSubmission()  {
         if (err)  {
             console.error ("Error authenticating", err);
         } else {
-            console.log ("Response: ", resp)
-            console.log ("Body: ", body)
+            console.log ("Response: ")
+            console.log ("Body: ")
         }
     }
 
@@ -38,7 +38,7 @@ function getWebformSubmission()  {
         if (err)  {
             console.error ("Error authenticating", err);
         } else {
-            console.log ("Response: ", resp)
+            console.log ("Response: ")
         }
     }
 
