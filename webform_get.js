@@ -5,20 +5,16 @@
 var request = require('request')
 
 function getWebformSubmission()  {
-    var purl = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/user/login?'
-    var webfrm_url = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/webform_rest/swl_create_service/submissions/1_format=json?'
-
-    var user = new Object()
-    user.name = 'admin'
-    user.pass = 'swladmin'
+    var purl = 'http://192.168.1.45:32798/user/login?_format=json'
+    var webfrm_url = 'http:/192.168.1.45:32789/webform_rest/swl_create_service/submissions/1_format=json?'
+    // var purl = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/user/login?'
+    // var webfrm_url = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/webform_rest/swl_create_service/submissions/1_format=json?'
 
     auth = 'Basic' + new Buffer("admin:swladmin").toString('base64');
 
-    var json_user = JSON.stringify (user)
-
     var options = {
-        jar: true,
         url: purl,
+        jar: true,
         headers: {
             "Authorization": auth
         }
