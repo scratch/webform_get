@@ -22,10 +22,11 @@ var request = require('request')
 function getWebformSubmission()  {
     // auth = 'Basic' + new Buffer("admin:swladmin").toString('base64');
     var purl = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/user/login?_format=json'
+    var coki = request.jar();
     var options = {
         url: purl,
         json: true,
-        jar: true,
+        jar: coki,
         body: {
           name: 'admin',
           pass: 'swladmin'
@@ -37,6 +38,7 @@ function getWebformSubmission()  {
             console.error ("Error authenticating", err);
         } else {
           console.log('Login output ', JSON.stringify(resp.body, null, 2));
+          console.log('Coki ', JSON.stringify(coki, null, 2));
           var webfrm_url = 'https://master-7rqtwti-bzrfe2fjw7z3k.eu-2.platformsh.site/webform_rest/swl_create_service/submission/1?_format=json';
             var options_webfrm = {
                 url: webfrm_url,
@@ -45,7 +47,7 @@ function getWebformSubmission()  {
                   'cache-control': 'no-cache'
                 }],
                 json: true,
-                jar: true
+                jar: coki
             };
             request.get(options_webfrm, (err, resp, body) => {
                 console.log('Form data ', JSON.stringify(resp.body, null, 2));
