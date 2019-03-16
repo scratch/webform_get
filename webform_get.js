@@ -26,7 +26,7 @@ function getWebformSubmission()  {
     var options = {
         url: purl,
         json: true,
-        jar: coki,
+        jar: coki, // adding cookie var
         body: {
           name: 'admin',
           pass: 'swladmin'
